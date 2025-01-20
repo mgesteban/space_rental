@@ -1,0 +1,36 @@
+flowchart TD
+    subgraph Frontend
+        UI[User Interface]
+        Cal[Calendar View]
+        Forms[Downloadable Forms]
+    end
+
+    subgraph Backend
+        API[REST API]
+        Auth[Authentication]
+        BookingService[Booking Service]
+        RoomService[Room Service]
+        AdminService[Admin Service]
+    end
+
+    subgraph Database
+        Users[(Users)]
+        Rooms[(Rooms)]
+        Bookings[(Bookings)]
+    end
+
+    UI --> API
+    Cal --> API
+    Forms --> API
+    
+    API --> Auth
+    API --> BookingService
+    API --> RoomService
+    API --> AdminService
+    
+    BookingService --> Bookings
+    RoomService --> Rooms
+    Auth --> Users
+    AdminService --> Users
+    AdminService --> Bookings
+    AdminService --> Rooms
