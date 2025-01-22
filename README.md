@@ -5,25 +5,25 @@ A modern web application for managing room rentals with user authentication, boo
 ## Features
 
 ### User Features
-- 🏢 Browse available rooms with detailed information
-- 📅 Interactive booking calendar
-- 📝 Form downloads (internal/external use)
-- 👤 User authentication system
-- 📊 Booking history and status tracking
+- Browse available rooms with detailed information
+- Interactive booking calendar
+- Form downloads (internal/external use)
+- User authentication system
+- Booking history and status tracking
 
 ### Admin Features
-- 📋 Booking management dashboard
-- ✅ Approve/reject booking requests
-- 🔄 Update room availability status
-- 👥 Role-based access control
-- 📈 Booking overview and tracking
+- Booking management dashboard
+- Approve/reject booking requests
+- Update room availability status
+- Role-based access control
+- Booking overview and tracking
 
 ### Room Management
-- 🖼️ Visual room previews with images
-- 📋 Detailed room specifications
-- 🎯 Real-time availability status
-- 💡 Equipment and capacity details
-- 📊 Booking status indicators
+- Visual room previews with images
+- Detailed room specifications
+- Real-time availability status
+- Equipment and capacity details
+- Booking status indicators
 
 ## Tech Stack
 
