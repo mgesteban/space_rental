@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { AuthContextType, AuthState, LoginCredentials, RegisterCredentials } from '../../types/auth';
 import { User } from '../../types/room';
+import { authService } from '../../services/api';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -27,42 +28,36 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (credentials: LoginCredentials) => {
     try {
-      // TODO: Replace with actual API call when backend is ready
-      // For testing: if email contains 'admin', create admin user
-      const mockUser: User = {
-        id: '1',
-        name: 'Test User',
-        email: credentials.email,
-        role: credentials.email.includes('admin') ? 'admin' : 'user'
-      };
+      const response = await authService.login(credentials);
+      const { user, token } = response.data;
       
-      setAuthState({ user: mockUser, isAuthenticated: true });
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      setAuthState({ user, isAuthenticated: true });
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
     } catch (error) {
-      throw new Error('Login failed');
+      console.error('Login error:', error);
+      throw error;
     }
   };
 
   const register = async (credentials: RegisterCredentials) => {
     try {
-      // TODO: Replace with actual API call when backend is ready
-      const mockUser: User = {
-        id: '1',
-        name: credentials.name,
-        email: credentials.email,
-        role: 'user'
-      };
+      const response = await authService.register(credentials);
+      const { user, token } = response.data;
       
-      setAuthState({ user: mockUser, isAuthenticated: true });
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      setAuthState({ user, isAuthenticated: true });
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
     } catch (error) {
-      throw new Error('Registration failed');
+      console.error('Registration error:', error);
+      throw error;
     }
   };
 
   const logout = () => {
     setAuthState({ user: null, isAuthenticated: false });
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
   };
 
   return (

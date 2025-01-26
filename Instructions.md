@@ -254,31 +254,52 @@ interface User {
 }
 ```
 
-## Next Steps
+## Deployment Progress
 
-### 1. Frontend Development
-- ✅ Implement room selection and detail view
-- ✅ Create booking calendar component
-- ✅ Add user authentication flow
-- ✅ Create admin dashboard with booking management
+### 1. Frontend Deployment ✅
+- ✅ Built production version of React application
+- ✅ Created and configured S3 bucket 'rentspace'
+- ✅ Uploaded frontend build files to S3
+- ✅ Set up CloudFront distribution with:
+  * Origin Access Control (OAC)
+  * HTTPS-only protocol
+  * Proper bucket policies
+  * Error handling for SPA routing
+- ✅ Frontend accessible at: https://d3npaxt5071b46.cloudfront.net
+
+### 2. Next Steps
+
+#### Frontend Tasks
+- Add missing manifest icon (logo192.png)
 - Implement form downloads
 - Add room filtering and search
 - Add loading states and error handling
 - Implement form validation
 - Add unit tests
 
-### 2. Backend Development
+#### Backend Development
 - Set up Express.js server
 - Implement database models
 - Create API endpoints
 - Add authentication middleware
 - Implement business logic
 
-### 3. AWS Infrastructure
-- Create required resources
-- Configure security settings
-- Set up monitoring
-- Implement CI/CD
+#### Backend Deployment
+- Set up EC2 instance
+- Configure security groups
+- Set up environment variables
+- Deploy Node.js application
+- Set up PM2 process manager
+- Configure NGINX reverse proxy
+- Set up SSL certificates
+- Configure domain and DNS
+
+#### Infrastructure
+- Set up monitoring (CloudWatch)
+- Implement CI/CD pipeline
+- Configure backup strategy
+- Set up logging
+- Implement security best practices
 
 ## Backend Setup (Pending)
 
@@ -357,45 +378,12 @@ backend/
    - created_at
    - updated_at
 
-## AWS Deployment (Pending)
+## AWS Deployment
 
-### Infrastructure Components
-1. Frontend
-   - S3 bucket for static hosting
-   - CloudFront distribution
-   - Route 53 DNS configuration
+### Deployment Architecture Change ⚡
+We've moved from a traditional nginx-based deployment to a cloud-native AWS architecture for several reasons:
 
-2. Backend
-   - Elastic Beanstalk environment
-   - RDS PostgreSQL instance
-   - S3 bucket for file storage
-
-3. Security
-   - SSL/TLS certificates
-   - IAM roles and policies
-   - Security groups
-   - VPC configuration
-
-### Deployment Steps (To Be Implemented)
-1. Frontend Deployment
-   - Build optimization
-   - S3 bucket setup
-   - CloudFront configuration
-   - DNS setup
-
-2. Backend Deployment
-   - Environment configuration
-   - Database migration
-   - API endpoint setup
-   - Monitoring setup
-
-3. CI/CD Pipeline
-   - GitHub Actions setup
-   - Automated testing
-   - Deployment automation
-   - Rollback procedures
-
-## Current Progress
+[... Updated AWS deployment content ...]
 ✅ Frontend foundation with Material-UI
 ✅ Responsive room listing interface
 ✅ Room status management
