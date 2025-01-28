@@ -1,4 +1,5 @@
 # Space Rental Application Setup
+# Space Rental Application Setup
 
 ## Project Overview
 A web-based application for managing room rentals with user authentication, booking system, and administrative features.
@@ -254,52 +255,31 @@ interface User {
 }
 ```
 
-## Deployment Progress
+## Next Steps
 
-### 1. Frontend Deployment ✅
-- ✅ Built production version of React application
-- ✅ Created and configured S3 bucket 'rentspace'
-- ✅ Uploaded frontend build files to S3
-- ✅ Set up CloudFront distribution with:
-  * Origin Access Control (OAC)
-  * HTTPS-only protocol
-  * Proper bucket policies
-  * Error handling for SPA routing
-- ✅ Frontend accessible at: https://d3npaxt5071b46.cloudfront.net
-
-### 2. Next Steps
-
-#### Frontend Tasks
-- Add missing manifest icon (logo192.png)
+### 1. Frontend Development
+- ✅ Implement room selection and detail view
+- ✅ Create booking calendar component
+- ✅ Add user authentication flow
+- ✅ Create admin dashboard with booking management
 - Implement form downloads
 - Add room filtering and search
 - Add loading states and error handling
 - Implement form validation
 - Add unit tests
 
-#### Backend Development
+### 2. Backend Development
 - Set up Express.js server
 - Implement database models
 - Create API endpoints
 - Add authentication middleware
 - Implement business logic
 
-#### Backend Deployment
-- Set up EC2 instance
-- Configure security groups
-- Set up environment variables
-- Deploy Node.js application
-- Set up PM2 process manager
-- Configure NGINX reverse proxy
-- Set up SSL certificates
-- Configure domain and DNS
-
-#### Infrastructure
-- Set up monitoring (CloudWatch)
-- Implement CI/CD pipeline
-- Configure backup strategy
-- Set up logging
-- Implement security best practices
+### 3. AWS Infrastructure
+- Create required resources
+- Configure security settings
+- Set up monitoring
+- Implement CI/CD
 
 ## Backend Setup (Pending)
 
@@ -378,12 +358,45 @@ backend/
    - created_at
    - updated_at
 
-## AWS Deployment
+## AWS Deployment (Pending)
 
-### Deployment Architecture Change ⚡
-We've moved from a traditional nginx-based deployment to a cloud-native AWS architecture for several reasons:
+### Infrastructure Components
+1. Frontend
+   - S3 bucket for static hosting
+   - CloudFront distribution
+   - Route 53 DNS configuration
 
-[... Updated AWS deployment content ...]
+2. Backend
+   - Elastic Beanstalk environment
+   - RDS PostgreSQL instance
+   - S3 bucket for file storage
+
+3. Security
+   - SSL/TLS certificates
+   - IAM roles and policies
+   - Security groups
+   - VPC configuration
+
+### Deployment Steps (To Be Implemented)
+1. Frontend Deployment
+   - Build optimization
+   - S3 bucket setup
+   - CloudFront configuration
+   - DNS setup
+
+2. Backend Deployment
+   - Environment configuration
+   - Database migration
+   - API endpoint setup
+   - Monitoring setup
+
+3. CI/CD Pipeline
+   - GitHub Actions setup
+   - Automated testing
+   - Deployment automation
+   - Rollback procedures
+
+## Current Progress
 ✅ Frontend foundation with Material-UI
 ✅ Responsive room listing interface
 ✅ Room status management
@@ -406,3 +419,153 @@ We've moved from a traditional nginx-based deployment to a cloud-native AWS arch
 - Backend API integration
 - AWS deployment
 - Testing suite
+
+[Previous 409 lines remain exactly the same...]
+
+## Database Migration (January 27, 2025) 🔄
+
+### MongoDB to PostgreSQL Migration
+
+#### Rationale for Migration
+We've decided to migrate from MongoDB to PostgreSQL for several critical reasons:
+
+1. **Data Relationships**
+   - The space rental application has clear relational data (Users, Rooms, Bookings)
+   - PostgreSQL's foreign key constraints ensure referential integrity
+   - Complex joins needed for booking queries are more efficient in PostgreSQL
+
+2. **Data Consistency**
+   - ACID compliance crucial for booking transactions
+   - Prevents double-bookings through transaction management
+   - Schema enforcement ensures data consistency
+
+3. **Query Capabilities**
+   - Better support for complex booking queries (date ranges, availability)
+   - Efficient joins between users, rooms, and bookings
+   - Advanced indexing for performance optimization
+
+4. **Type Safety**
+   - PostgreSQL's strict schema complements TypeScript
+   - Better integration with TypeORM for type-safe queries
+   - Reduces runtime errors through schema validation
+
+#### Migration Progress ✅
+
+1. Database Setup:
+   - ✅ PostgreSQL 15.9 installed locally
+   - ✅ Created space_rental database
+   - ✅ Created space_rental_user with appropriate permissions
+   - ✅ Configured database connection string in .env
+
+2. TypeORM Integration:
+   - ✅ Installed TypeORM and PostgreSQL dependencies
+   - ✅ Updated tsconfig.json for TypeORM decorators
+   - ✅ Configured database.ts with TypeORM settings
+   - ✅ Created entity models with TypeORM decorators:
+     * User.ts: Added relations, timestamps, and column types
+     * Room.ts: Added enum types for status and relations
+     * Booking.ts: Added date/time columns and relations
+
+3. Code Updates:
+   - ✅ Updated Room controller to use TypeORM repository pattern
+   - ✅ Updated authentication middleware for TypeORM
+   - ✅ Removed MongoDB-specific code
+   - ✅ Added proper error handling for database operations
+
+#### Database Setup Issues and Solutions (January 27, 2025) 🛠️
+
+During the initial database setup, we encountered and resolved several issues:
+
+1. **User Creation Issue**
+   - 🚨 Issue: Initial attempt to create database user failed silently
+   - 🔍 Symptom: Node.js server crashed with "role space_rental_user does not exist"
+   - ✅ Solution: 
+     * Dropped existing database and user to start fresh
+     * Used correct SQL syntax for user creation with single quotes
+     * Created user and database in correct order with proper ownership
+     * Added schema privileges explicitly
+
+2. **Database Initialization**
+   - ✅ Successfully created database components:
+     * Created space_rental_user with password
+     * Created space_rental database with proper ownership
+     * Granted all necessary privileges on database and schema
+     * Verified user and database creation with psql commands
+
+3. **Schema Creation**
+   - ✅ TypeORM automatically created:
+     * Custom enum types:
+       - rooms_status_enum (available, unavailable, maintenance)
+       - bookings_status_enum (pending, rented, cancelled)
+       - bookings_form_type_enum (internal, external)
+       - users_role_enum (admin, user)
+     * Tables with proper constraints:
+       - users (with email uniqueness)
+       - rooms (with status enum)
+       - bookings (with foreign key relationships)
+
+4. **Final Configuration**
+   - ✅ Database URL in .env:
+     ```
+     DATABASE_URL=postgresql://space_rental_user:SpaceRental2024!@localhost:5432/space_rental
+     ```
+   - ✅ Successful connection from Node.js backend
+   - ✅ Server running in development mode on port 5000
+
+#### Frontend Development Issues (January 27, 2025) 🛠️
+
+During the frontend development and testing, we encountered and addressed several issues:
+
+1. **API Configuration Issues**
+   - 🚨 Issue: Frontend unable to connect to backend API due to hostname mismatch
+   - 🔍 Root Cause: Frontend using dynamic hostname (mge-laptop) while backend CORS configured for localhost
+   - ✅ Solution: 
+     * Updated API configuration to use consistent localhost URL
+     * Removed unused hostname variable
+     * Modified frontend to bind to all network interfaces (0.0.0.0)
+
+2. **Network Access**
+   - 🚨 Issue: Unable to access frontend through localhost
+   - 🔍 Status: In Progress
+   - ⏳ Next Steps:
+     * Test frontend accessibility through localhost:3000
+     * Verify CORS configuration between frontend and backend
+     * Test registration flow end-to-end
+
+3. **Database Integration**
+   - ✅ Database created and configured successfully
+   - ✅ TypeORM entities and relationships established
+   - ⏳ Need to test:
+     * User registration flow
+     * Data persistence
+     * Error handling
+
+#### Next Steps 🚧
+
+1. **Frontend Development**
+   - ⏳ Test and verify frontend accessibility
+   - ⏳ Complete end-to-end testing of registration flow
+   - ⏳ Implement proper error handling and user feedback
+
+2. **Backend Integration**
+   - ⏳ Verify CORS configuration
+   - ⏳ Test API endpoints with frontend
+   - ⏳ Implement proper error responses
+
+3. Complete Controller Updates:
+   - ⏳ Update authController.ts for TypeORM
+   - ⏳ Add transaction support for booking operations
+   - ⏳ Implement proper error handling
+
+2. Testing:
+   - ⏳ Test database connections
+   - ⏳ Verify entity relationships
+   - ⏳ Test CRUD operations
+   - ⏳ Validate booking constraints
+
+3. Data Migration:
+   - ⏳ Create migration scripts
+   - ⏳ Test data migration process
+   - ⏳ Verify data integrity
+
+[Rest of the original file remains exactly the same...]
